@@ -3,8 +3,7 @@ import logging
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 from app.providers import logging_provider
-from app.jobs.demo_job import demo_job
-
+from app.services.arbitrage.triangular import execute_tri
 
 def create_scheduler() -> BlockingScheduler:
     logging_provider.register()
@@ -22,4 +21,4 @@ def register_job(scheduler):
     """
      注册调度任务
     """
-    scheduler.add_job(demo_job, 'interval', seconds=5)
+    scheduler.add_job(execute_tri, 'interval', seconds=150,misfire_grace_time=None,max_instances=2)
